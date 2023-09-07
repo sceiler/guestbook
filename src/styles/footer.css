@@ -1,0 +1,11 @@
+.footer {
+    @apply flex bg-black text-white h-6 justify-center items-center;
+}
+  
+.footer .links {
+    @apply flex bg-black text-white h-6 justify-between items-center ml-2.5;
+}
+
+.footer .links li {
+    @apply flex list-none items-center px-1 text-xs underline;
+}
