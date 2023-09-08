@@ -8,6 +8,11 @@ export async function POST(request: Request) {
   const currentUserEmail =
     (session && session.user && session.user.email) || undefined;
 
+  if (!currentUserEmail) {
+    console.log("No user email found");
+    return NextResponse.json({ error: "No user email found" });
+  }
+
   const data = await request.json();
   const user = await prisma.user.findUnique({
     where: {
@@ -16,6 +21,7 @@ export async function POST(request: Request) {
   });
 
   if (!user) {
+    console.log("User not found");
     return NextResponse.json({ error: "User not found" });
   }
 
