@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 import { authOptions } from "../lib/AuthOptions";
 import { prisma } from "../lib/prisma";
 
@@ -16,16 +16,25 @@ export default async function Dashboard() {
     redirect("/api/auth/signin");
   }
 
-  const entries = await prisma.entry.findMany({ where: { user: session?.user}});
+  const entries = await prisma.entry.findMany({
+    where: {
+      user: session?.user,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
 
   return (
     <div className="mx-2 my-2">
       {entries.map((entry) => {
-        return <>
-          <h1>Title: {entry.title}</h1>
-          <p>Content: {entry.content}</p>
-          <hr></hr>
-        </>
+        return (
+          <>
+            <h1>Title: {entry.title}</h1>
+            <p>Content: {entry.content}</p>
+            <hr></hr>
+          </>
+        );
       })}
     </div>
   );
