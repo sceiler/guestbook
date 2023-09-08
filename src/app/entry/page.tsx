@@ -1,6 +1,10 @@
 "use client";
 
+import { useRef } from 'react'; // Import useRef
+
 export default function EntryForm({ user }: any) {
+  const formRef = useRef<HTMLFormElement>(null); // Create a reference for the form
+
   const addEntry = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -22,7 +26,7 @@ export default function EntryForm({ user }: any) {
     if (res.ok) {
       await res.json();
 
-      e.currentTarget.reset();
+      formRef.current?.reset();
     } else {
       console.error("Failed to post the entry.");
     }
