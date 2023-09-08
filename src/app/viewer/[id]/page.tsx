@@ -16,7 +16,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-    const entries: Entry[] = await fetch('http://localhost:3000/api/content')
+    const entries: Entry[] = await fetch('/api/content')
     .then(res => res.json());
 
     return entries.map(entry => ({
@@ -25,7 +25,7 @@ export async function generateStaticParams() {
 }
 
 export default async function EntryPage( { params }: Props ) {
-    const entries: Entry[] = await fetch('http://localhost:3000/api/content')
+    const entries: Entry[] = await fetch('/api/content')
         .then(res => res.json());
 
     const entry = entries.find(entry => entry.id === params.id)!;
