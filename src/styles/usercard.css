@@ -1,0 +1,17 @@
+.card {
+    @apply bg-gray-200 w-36;
+}
+
+.card h3 {
+    @apply mb-4 font-bold;
+    /* Replace with the appropriate color utility if known */
+    color: black;
+}
+
+.cardImage {
+    @apply w-36 h-30 object-cover mb-2;
+}
+
+.cardContent {
+    @apply px-2 ;
+}

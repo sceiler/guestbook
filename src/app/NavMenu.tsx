@@ -13,11 +13,19 @@ export default function NavMenu() {
         </nav>
       </Link>
       <ul className="nav links">
+        <AuthCheck>
+          <li>
+            <Link href={"/entry"}>New</Link>
+          </li>
+        </AuthCheck>
         <li>
           <Link href={"/about"}>About</Link>
         </li>
         <li>
           <Link href={"/random"}>Random</Link>
+        </li>
+        <li>
+          <Link href={"/users"}>Users</Link>
         </li>
         <AuthCheck>
           <li>
