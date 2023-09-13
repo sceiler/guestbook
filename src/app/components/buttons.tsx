@@ -1,11 +1,11 @@
 'use client';
 
-import { useSession, signIn, signOut } from 'next-auth/react';
+import {signIn, signOut, useSession} from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export function SignInButton() {
-    const { data: session, status } = useSession();
+    const {data: session, status} = useSession();
     console.log(session, status);
 
     if (status === 'loading') {

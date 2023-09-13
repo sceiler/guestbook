@@ -1,19 +1,19 @@
 .nav {
     @apply flex bg-black text-white h-30 justify-between items-center;
 }
-  
+
 .nav .logo {
     @apply flex bg-black text-white h-30 justify-between items-center ml-2.5;
 }
-  
+
 .nav .links {
     @apply list-none flex mr-4;
 }
-  
+
 .nav .links li {
     @apply h-18 flex items-center px-1 underline;
 }
-  
+
 .nav .logo .title {
     @apply ml-2.5 text-2xl;
 }

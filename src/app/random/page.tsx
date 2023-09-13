@@ -1,4 +1,4 @@
-import { GET } from "../api/content/route";
+import {GET} from "../api/content/route";
 
 export const dynamic = 'force-dynamic';
 
@@ -16,7 +16,7 @@ interface Props {
     params: { id: string };
 }
 
-export default async function RandomEntryPage( { params }: Props ) {
+export default async function RandomEntryPage({params}: Props) {
     //const entries: Entry[] = await fetch('http://localhost:3000/api/content').then(res => res.json());
     const entries: Entry[] = await GET().then(res => res.json());
 
