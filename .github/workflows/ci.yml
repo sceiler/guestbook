@@ -8,6 +8,12 @@ on:
   schedule:
     - cron: '0 */1 * * *'
 
+env:
+  GITHUB_ID: ${{secrets.GITHUB_ID}}
+  GITHUB_SECRET: ${{secrets.GITHUB_SECRET}}
+  NEXTAUTH_SECRET: ${{secrets.NEXTAUTH_SECRET}}
+  DATABASE_URL: ${{secrets.DATABASE_URL}}
+
 jobs:
   # This job will build the app and run the tests on the CI server (Github)
   local:
