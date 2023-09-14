@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    types: [ opened, reopened, synchronize ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *'
+
+jobs:
+  run:
+    name: Run
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install npm for app
+        run: npm install
+
+      - name: Install npm for e2e
+        run: |
+          cd e2e
+          npm install
+
+      - name: Run tests
+        run: |
+          cd e2e
+          npm run wdio-github
+        env:
+          VERCEL_URL: ${{ vars.VERCEL_URL }}
