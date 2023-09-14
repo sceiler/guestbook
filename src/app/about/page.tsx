@@ -8,8 +8,8 @@ export const metadata: Metadata = {
 export default async function About() {
     return (
         <main>
-            <h1 className="mx-1 text-xl">About us</h1>
-            <p className="mx-1">This is a guestbook.</p>
+            <h1 data-testid={'about-us'} id={'about-us'} className="mx-1 text-xl">About us</h1>
+            <p data-testid={'about-us-paragraph'} id={'about-us-paragraph'} className="mx-1">This is a guestbook.</p>
         </main>
     )
 }
