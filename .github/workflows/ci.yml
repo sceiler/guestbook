@@ -26,8 +26,15 @@ jobs:
       - name: Install npm
         run: npm install
 
-      - name: Run Next.js on localhost
-        run: npm run dev
+      # https://nextjs.org/docs/pages/api-reference/next-cli#build
+      - name: Create production build
+        run: npm run build
+
+      # https://nextjs.org/docs/pages/api-reference/next-cli#production
+      - name: Start production build on localhost
+        run: |
+          npm run start &
+          sleep 5
 
       - name: Install npm for e2e
         run: |
