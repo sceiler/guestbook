@@ -121,6 +121,6 @@ jobs:
       - name: Run tests
         run: |
           cd e2e
-          npm run wdio-github
+          npm run wdio-github-local
         env:
           VERCEL_URL: ${{ needs.Deploy-Preview.outputs.VERCEL_URL }}
