@@ -9,14 +9,12 @@ on:
     - cron: '0 */1 * * *'
 
 jobs:
-  run:
-    name: Run
+  # This job will build the app and run the tests on the CI server (Github)
+  local:
+    name: Local build, test and deploy
     runs-on: ubuntu-latest
 
     steps:
-      - name: Install Chrome
-        uses: browser-actions/setup-chrome@v1
-
       - name: Checkout repository
         uses: actions/checkout@v4
 
@@ -25,17 +23,48 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install npm for app
+      - name: Install npm
         run: npm install
+
+      - name: Run Next.js on localhost
+        run: npm run dev
 
       - name: Install npm for e2e
         run: |
           cd e2e
           npm install
 
-      - name: Run tests
-        run: |
-          cd e2e
-          npm run wdio-github
-        env:
-          VERCEL_URL: ${{ vars.VERCEL_URL }}
+      # Do not need to switch directory again, as the previous step already did that
+      - name: Run WDIO tests against localhost
+        run: npm run wdio
+
+#  run:
+#    name: Run
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Install Chrome
+#        uses: browser-actions/setup-chrome@v1
+#
+#      - name: Checkout repository
+#        uses: actions/checkout@v4
+#
+#      - name: Setup Node.js
+#        uses: actions/setup-node@v3
+#        with:
+#          node-version: 18
+#
+#      - name: Install npm for app
+#        run: npm install
+#
+#      - name: Install npm for e2e
+#        run: |
+#          cd e2e
+#          npm install
+#
+#      - name: Run tests
+#        run: |
+#          cd e2e
+#          npm run wdio-github
+#        env:
+#          VERCEL_URL: ${{ vars.VERCEL_URL }}
