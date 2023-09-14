@@ -59,6 +59,8 @@ jobs:
     name: Deploy Preview
     runs-on: ubuntu-latest
     needs: local
+    outputs:
+      VERCEL_URL: ${{ steps.deploy.outputs.VERCEL_URL }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -81,35 +83,44 @@ jobs:
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        id: deploy
+        run: |
+          echo "VERCEL_URL=$(vercel deploy --prod --prebuilt --token=${{ secrets.VERCEL_TOKEN }})" >> $GITHUB_OUTPUT
 
-#  run:
-#    name: Run
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - name: Install Chrome
-#        uses: browser-actions/setup-chrome@v1
-#
-#      - name: Checkout repository
-#        uses: actions/checkout@v4
-#
-#      - name: Setup Node.js
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version: 18
-#
-#      - name: Install npm for app
-#        run: npm install
-#
-#      - name: Install npm for e2e
-#        run: |
-#          cd e2e
-#          npm install
-#
-#      - name: Run tests
-#        run: |
-#          cd e2e
-#          npm run wdio-github
-#        env:
-#          VERCEL_URL: ${{ vars.VERCEL_URL }}
+      - name: Generate step summary
+        run: |
+          echo "### Deployed to Vercel! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "Preview URL: ${{ steps.deploy.outputs.VERCEL_URL }}" >> $GITHUB_STEP_SUMMARY
+
+  # This job will run the E2E tests against the deployed preview
+  remote:
+    name: Remote test
+    runs-on: ubuntu-latest
+    needs: Deploy-Preview
+
+    steps:
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install npm for app
+        run: npm install
+
+      - name: Install npm for e2e
+        run: |
+          cd e2e
+          npm install
+
+      - name: Run tests
+        run: |
+          cd e2e
+          npm run wdio-github
+        env:
+          VERCEL_URL: ${{ needs.Deploy-Preview.outputs.VERCEL_URL }}
