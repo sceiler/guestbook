@@ -47,9 +47,10 @@ jobs:
           cd e2e
           npm install
 
-      # Do not need to switch directory again, as the previous step already did that
       - name: Run WDIO tests against localhost
-        run: npm run wdio
+        run: |
+          cd e2e
+          npm run wdio
 
 #  run:
 #    name: Run
