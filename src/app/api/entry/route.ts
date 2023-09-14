@@ -8,10 +8,10 @@ export async function POST(request: Request) {
     const currentUserEmail = (session && session.user && session.user.email) || undefined;
     const currentUser = (session && session.user && session.user.name) || undefined;
 
-    if (!currentUserEmail) {
-        console.log("No user email found");
-        return NextResponse.json({error: "No user email found"});
-    }
+    // if (!currentUserEmail) {
+    //     console.log("No user email found");
+    //     return NextResponse.json({error: "No user email found"});
+    // }
 
     const data = await request.json();
     const user = await prisma.user.findUnique({
