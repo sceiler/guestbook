@@ -63,6 +63,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install npm
+        run: npm install
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
 
