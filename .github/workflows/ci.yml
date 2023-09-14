@@ -50,7 +50,7 @@ jobs:
       - name: Run WDIO tests against localhost
         run: |
           cd e2e
-          npm run wdio
+          npm run wdio-github-local
 
 #  run:
 #    name: Run
