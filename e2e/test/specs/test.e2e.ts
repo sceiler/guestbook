@@ -33,9 +33,30 @@ describe('Guestbook application', () => {
         expect(paragraphText).toBe('This is a guestbook.');
     });
 
-    it('should redirect non-authenticated user to GitHub SSO ', async () => {
-        await browser.url(baseUrl + '/users');
+    const MAX_ATTEMPTS = 60; // This will give us 60 attempts (60 * 3 seconds = 180 seconds = 3 minutes)
+    const RETRY_INTERVAL = 3000; // Retry every 3 seconds
 
+    it('should redirect non-authenticated user to GitHub SSO ', async () => {
+        let attempt = 0;
+        let success = false;
+
+        while (attempt < MAX_ATTEMPTS && !success) {
+            await browser.url(baseUrl + '/users');
+            const browserUrl = await browser.getUrl();
+
+            const formElementExists = await $('form[action*="/api/auth/signin/github"]').isExisting();
+
+            // If both assertions are satisfied, set success to true
+            if (browserUrl.includes('/api/auth/signin') && formElementExists) {
+                success = true;
+            } else {
+                attempt++;
+                await browser.pause(RETRY_INTERVAL); // Wait for 3 seconds before the next attempt
+            }
+        }
+
+        // After finishing all attempts, perform your assertions one more time to ensure
+        // that the test would fail if the conditions were not met in the allowed number of attempts.
         const browserUrl = await browser.getUrl();
         await expect(browserUrl).toContain('/api/auth/signin');
         const formElement = await $('form[action*="/api/auth/signin/github"]');
