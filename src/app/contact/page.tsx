@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default async function Contact() {
     return (
         <main>
-            <h1 data-testid={'contact-us'} id={'contact-us'} className="mx-1 text-xl">About us</h1>
+            <h1 data-testid={'contact-us'} id={'contact-us'} className="mx-1 text-xl">Contact us</h1>
             <p data-testid={'contact-us-paragraph'} id={'contact-us-paragraph'} className="mx-1">This is how to contact
                 us: my-email@gmail.com</p>
         </main>
