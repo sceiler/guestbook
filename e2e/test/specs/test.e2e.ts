@@ -33,6 +33,24 @@ describe('Guestbook application', () => {
         expect(paragraphText).toBe('This is a guestbook.');
     });
 
+    it('should have a contact us page with header and paragraph', async () => {
+        await browser.url(baseUrl + '/contact')
+
+        let browserTitle = '';
+        await browser.getTitle().then((title) => {
+            browserTitle = title;
+        });
+
+        const aboutUsHeader = await $('#contact-us');
+        const aboutUsParagraph = await $('#contact-us-paragraph');
+        const headerText = await aboutUsHeader.getText();
+        const paragraphText = await aboutUsParagraph.getText();
+
+        await expect(browserTitle === 'Contact us').toBe(true);
+        expect(headerText).toBe('Contact us');
+        expect(paragraphText).toBe('This is how to contact us: my-email@gmail.com');
+    });
+
     it.skip('should redirect non-authenticated user to GitHub SSO ', async () => {
         const MAX_ATTEMPTS = 20;
         const RETRY_INTERVAL = 2000; // Retry every 2 seconds
@@ -65,18 +83,6 @@ describe('Guestbook application', () => {
         await expect(browserUrl).toContain('/api/auth/signin');
         const formElement = await $('form[action*="/api/auth/signin/github"]');
         await expect(formElement).toBeExisting();
-    });
-
-    it('should show a 404 when going to contact page', async () => {
-        await browser.url(baseUrl + '/contact');
-
-        const browserTitle = await browser.getTitle();
-        await expect(browserTitle).toBe('404: This page could not be found');
-
-        const errorHeader = await $('h1.next-error-h1');
-        await expect(errorHeader).toBeExisting();
-        const errorText = await $('h2');
-        await expect(errorText).toHaveTextContaining('This page could not be found');
     });
 })
 
