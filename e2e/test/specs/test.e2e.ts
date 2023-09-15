@@ -33,6 +33,24 @@ describe('Guestbook application', () => {
         expect(paragraphText).toBe('This is a guestbook.');
     });
 
+    it('should have a contact us page with header and paragraph', async () => {
+        await browser.url(baseUrl + '/contact')
+
+        let browserTitle = '';
+        await browser.getTitle().then((title) => {
+            browserTitle = title;
+        });
+
+        const aboutUsHeader = await $('#about-us');
+        const aboutUsParagraph = await $('#about-us-paragraph');
+        const headerText = await aboutUsHeader.getText();
+        const paragraphText = await aboutUsParagraph.getText();
+
+        await expect(browserTitle === 'Contact us').toBe(true);
+        expect(headerText).toBe('Contact us');
+        expect(paragraphText).toBe('This is how to contact us: my-email@gmail.com');
+    });
+
     it.skip('should redirect non-authenticated user to GitHub SSO ', async () => {
         const MAX_ATTEMPTS = 20;
         const RETRY_INTERVAL = 2000; // Retry every 2 seconds
