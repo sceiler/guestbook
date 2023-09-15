@@ -1,4 +1,4 @@
-name: CI
+name: Promote
 
 on:
   workflow_dispatch:
