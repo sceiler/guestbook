@@ -1,5 +1,6 @@
 import {prisma} from '../../lib/prisma';
 import {Metadata} from 'next';
+import Image from "next/image";
 
 interface Props {
     params: {
@@ -20,10 +21,10 @@ export default async function UserProfile({params}: Props) {
         <div className='mx-4 my-2'>
             <h1>{name}</h1>
 
-            <img
-                width={300}
+            <Image
                 src={image ?? '/vercel.svg'}
-                alt={`${name}'s profile`}
+                alt={'${name}\'s profile'}
+                width={300}
             />
 
             <h3>E-Mail</h3>

@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  workflow_dispatch:
+    inputs:
+      deployment_url:
+        description: 'Promote deployment to production'
+        required: true
+        default: ''
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install npm
+        run: npm install
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Promote deployment to production
+        run: vercel promote ${{ github.event.inputs.releaseversion }}
