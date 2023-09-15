@@ -33,15 +33,19 @@ describe('Guestbook application', () => {
         expect(paragraphText).toBe('This is a guestbook.');
     });
 
-    const MAX_ATTEMPTS = 60; // This will give us 60 attempts (60 * 3 seconds = 180 seconds = 3 minutes)
-    const RETRY_INTERVAL = 3000; // Retry every 3 seconds
-
     it('should redirect non-authenticated user to GitHub SSO ', async () => {
+        const MAX_ATTEMPTS = 20;
+        const RETRY_INTERVAL = 2000; // Retry every 2 seconds
         let attempt = 0;
         let success = false;
 
         while (attempt < MAX_ATTEMPTS && !success) {
-            await browser.url(baseUrl + '/users');
+            if (attempt === 0) {
+                await browser.url(baseUrl + '/users');
+            } else {
+                await browser.refresh();
+            }
+
             const browserUrl = await browser.getUrl();
 
             const formElementExists = await $('form[action*="/api/auth/signin/github"]').isExisting();
@@ -51,7 +55,7 @@ describe('Guestbook application', () => {
                 success = true;
             } else {
                 attempt++;
-                await browser.pause(RETRY_INTERVAL); // Wait for 3 seconds before the next attempt
+                await browser.pause(RETRY_INTERVAL); // Wait for 2 seconds before the next attempt
             }
         }
 
