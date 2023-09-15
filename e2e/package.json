@@ -11,6 +11,7 @@
   },
   "scripts": {
     "wdio": "wdio run ./wdio.conf.ts",
-    "wdio-github-local": "wdio run ./wdio-github-local.conf.ts"
+    "wdio-github-local": "wdio run ./wdio-github-local.conf.ts",
+    "wdio-github-remote": "wdio run ./wdio-github-remote.conf.ts"
   }
 }

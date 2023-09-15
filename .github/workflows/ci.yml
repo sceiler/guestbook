@@ -121,6 +121,11 @@ jobs:
       - name: Run tests
         run: |
           cd e2e
-          npm run wdio-github-local
+          npm run wdio-github-remote
         env:
           VERCEL_URL: ${{ needs.Deploy-Preview.outputs.VERCEL_URL }}
+
+      - name: Generate step summary
+        run: |
+          echo "### All E2E tests passed on Chrome, Firefox and Edge! :rocket:" >> $GITHUB_STEP_SUMMARY
+          echo "Deployment URL for promotion: ${{ needs.Deploy-Preview.outputs.VERCEL_URL }}" >> $GITHUB_STEP_SUMMARY
