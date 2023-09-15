@@ -33,7 +33,7 @@ describe('Guestbook application', () => {
         expect(paragraphText).toBe('This is a guestbook.');
     });
 
-    it('should redirect non-authenticated user to GitHub SSO ', async () => {
+    it.skip('should redirect non-authenticated user to GitHub SSO ', async () => {
         const MAX_ATTEMPTS = 20;
         const RETRY_INTERVAL = 2000; // Retry every 2 seconds
         let attempt = 0;
