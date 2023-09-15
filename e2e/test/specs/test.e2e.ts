@@ -41,8 +41,8 @@ describe('Guestbook application', () => {
             browserTitle = title;
         });
 
-        const aboutUsHeader = await $('#about-us');
-        const aboutUsParagraph = await $('#about-us-paragraph');
+        const aboutUsHeader = await $('#contact-us');
+        const aboutUsParagraph = await $('#contact-us-paragraph');
         const headerText = await aboutUsHeader.getText();
         const paragraphText = await aboutUsParagraph.getText();
 
@@ -83,18 +83,6 @@ describe('Guestbook application', () => {
         await expect(browserUrl).toContain('/api/auth/signin');
         const formElement = await $('form[action*="/api/auth/signin/github"]');
         await expect(formElement).toBeExisting();
-    });
-
-    it('should show a 404 when going to contact page', async () => {
-        await browser.url(baseUrl + '/contact');
-
-        const browserTitle = await browser.getTitle();
-        await expect(browserTitle).toBe('404: This page could not be found');
-
-        const errorHeader = await $('h1.next-error-h1');
-        await expect(errorHeader).toBeExisting();
-        const errorText = await $('h2');
-        await expect(errorText).toHaveTextContaining('This page could not be found');
     });
 })
 
